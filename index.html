@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Stellaris Worldwide connects people to verified pathways, practical resources, accountable next actions, and long-horizon goals.">
+  <title>Stellaris Worldwide | Connect your next step</title>
+  <style>
+    :root {
+      --night: #07111f;
+      --navy: #0c1d35;
+      --panel: rgba(13, 30, 52, .82);
+      --paper: #f7fbff;
+      --muted: #aac0d6;
+      --cyan: #62e5ff;
+      --violet: #a988ff;
+      --gold: #ffd66b;
+      --green: #66e4aa;
+      --line: rgba(170, 209, 238, .2);
+      --shadow: 0 22px 70px rgba(0, 0, 0, .32);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 18% -8%, rgba(98, 229, 255, .18), transparent 31rem),
+        radial-gradient(circle at 88% 18%, rgba(169, 136, 255, .18), transparent 35rem),
+        linear-gradient(180deg, #07111f 0%, #09172a 58%, #06101e 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .36;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.8) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(98,229,255,.55) 0 1px, transparent 1.5px);
+      background-position: 0 0, 43px 67px;
+      background-size: 123px 123px, 181px 181px;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: auto; position: relative; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 850; letter-spacing: -.025em; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(98,229,255,.5);
+      border-radius: 16px;
+      background: linear-gradient(145deg, #16335a, #081629);
+      box-shadow: 0 0 34px rgba(98,229,255,.2);
+      font-size: 23px;
+    }
+    nav { display: flex; gap: 22px; }
+    nav a { color: var(--muted); text-decoration: none; font-weight: 750; font-size: .92rem; }
+    nav a:hover { color: var(--paper); }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 50px;
+      min-height: 620px;
+      padding: 64px 0 76px;
+    }
+    .eyebrow { color: var(--cyan); font-size: .78rem; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 15px 0 22px; font-size: clamp(3.25rem, 8vw, 7rem); line-height: .86; letter-spacing: -.07em; }
+    h1 span { display: block; color: transparent; background: linear-gradient(90deg, var(--cyan), #e3f8ff 45%, var(--violet)); -webkit-background-clip: text; background-clip: text; }
+    .lead { max-width: 720px; color: var(--muted); font-size: clamp(1.07rem, 2vw, 1.34rem); }
+    .promise { color: var(--paper); font-weight: 780; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid rgba(98,229,255,.7);
+      border-radius: 14px;
+      background: linear-gradient(120deg, var(--cyan), #8af2d0);
+      color: #051220;
+      font-weight: 850;
+      text-decoration: none;
+      box-shadow: 0 12px 34px rgba(98,229,255,.18);
+    }
+    .button.secondary { background: rgba(255,255,255,.035); color: var(--paper); border-color: var(--line); box-shadow: none; }
+    .constellation { position: relative; min-height: 410px; display: grid; place-items: center; }
+    .planet {
+      display: grid;
+      place-items: center;
+      width: 214px;
+      height: 214px;
+      border: 1px solid rgba(98,229,255,.58);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #2a5d8f, #102947 48%, #071526 75%);
+      box-shadow: inset -25px -22px 42px rgba(0,0,0,.35), 0 0 75px rgba(98,229,255,.19);
+      font-size: 82px;
+      animation: breathe 5s ease-in-out infinite;
+    }
+    .orbit { position: absolute; inset: 44px; border: 1px solid rgba(169,136,255,.35); border-radius: 50%; transform: rotate(-12deg); }
+    .orbit::after { content: ""; position: absolute; inset: -35px; border: 1px dashed rgba(98,229,255,.18); border-radius: 50%; }
+    .satellite {
+      position: absolute;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(7,17,31,.86);
+      color: var(--paper);
+      font-weight: 760;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(9px);
+    }
+    .s1 { top: 32px; left: 0; } .s2 { top: 86px; right: -6px; }
+    .s3 { bottom: 42px; left: 8px; } .s4 { right: 15px; bottom: 5px; }
+    @keyframes breathe { 50% { transform: scale(1.035); box-shadow: inset -25px -22px 42px rgba(0,0,0,.35), 0 0 110px rgba(98,229,255,.27); } }
+    .section { padding: 72px 0; }
+    .section-heading { display: grid; grid-template-columns: .75fr 1.25fr; align-items: end; gap: 35px; margin-bottom: 28px; }
+    h2 { margin: 8px 0 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1; letter-spacing: -.045em; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 1.08rem; }
+    .path-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(155deg, rgba(18,40,68,.92), rgba(8,21,39,.82));
+      box-shadow: var(--shadow);
+    }
+    .card-icon { font-size: 29px; }
+    .card h3 { margin: 14px 0 7px; font-size: 1.08rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .93rem; }
+    .connector {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr 44px 1fr;
+      align-items: stretch;
+      margin-top: 28px;
+    }
+    .step { padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: rgba(8,22,40,.75); }
+    .step b { display: block; color: var(--cyan); margin-bottom: 6px; }
+    .step span { color: var(--muted); font-size: .92rem; }
+    .wire { display: grid; place-items: center; color: var(--gold); font-size: 24px; }
+    .planner {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 24px;
+      padding: 28px;
+      border: 1px solid rgba(98,229,255,.28);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .planner h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+    .planner p { color: var(--muted); }
+    .controls { display: grid; gap: 12px; }
+    label { color: var(--muted); font-size: .82rem; font-weight: 800; letter-spacing: .04em; }
+    select, input {
+      width: 100%;
+      margin-top: 6px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #08192c;
+      color: var(--paper);
+    }
+    .result {
+      min-height: 100%;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #071526;
+    }
+    .result .status { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(102,228,170,.12); color: var(--green); font-size: .78rem; font-weight: 850; }
+    .result h3 { margin: 16px 0 8px; font-size: 1.4rem; }
+    .result p, .result li { color: var(--muted); }
+    .result ol { padding-left: 20px; }
+    .guardrails { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .guardrail { border-top: 3px solid var(--violet); }
+    .target {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      padding: 30px;
+      border: 1px solid rgba(255,214,107,.3);
+      border-radius: 26px;
+      background: linear-gradient(120deg, rgba(255,214,107,.09), rgba(169,136,255,.08));
+    }
+    .target h2 { max-width: 760px; }
+    .bullseye { display: grid; place-items: center; width: 170px; height: 170px; border: 1px solid rgba(255,214,107,.55); border-radius: 50%; box-shadow: inset 0 0 0 28px rgba(255,214,107,.06), inset 0 0 0 55px rgba(169,136,255,.07); color: var(--gold); font-size: 46px; }
+    footer { padding: 44px 0 56px; color: var(--muted); font-size: .9rem; text-align: center; }
+    @media (max-width: 900px) {
+      .hero, .section-heading, .planner { grid-template-columns: 1fr; }
+      .hero { padding-top: 40px; }
+      .path-grid { grid-template-columns: 1fr 1fr; }
+      .connector { grid-template-columns: 1fr; gap: 10px; }
+      .wire { transform: rotate(90deg); }
+      .target { grid-template-columns: 1fr; }
+      .bullseye { width: 135px; height: 135px; }
+    }
+    @media (max-width: 560px) {
+      nav { display: none; }
+      .hero { min-height: auto; }
+      .constellation { min-height: 360px; }
+      .path-grid, .guardrails { grid-template-columns: 1fr; }
+      .section { padding: 54px 0; }
+      .planner { padding: 19px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <div class="brand"><span class="brand-mark">✦</span><span>Stellaris Worldwide</span></div>
+    <nav aria-label="Primary">
+      <a href="#pathways">Pathways</a>
+      <a href="#session">Start a session</a>
+      <a href="#standards">Standards</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div>
+        <div class="eyebrow">A constellation of practical pathways</div>
+        <h1>Find your <span>next horizon.</span></h1>
+        <p class="lead">Stellaris Worldwide connects people to work, learning, enterprise, service, and creative pathways—then helps turn possibility into a verified, accountable next step.</p>
+        <p class="lead promise">Explore broadly. Choose responsibly. Connect 🔌 what you know to what you can do next.</p>
+        <div class="actions">
+          <a class="button" href="#session">🔌 Start one pathway</a>
+          <a class="button secondary" href="#pathways">View the constellation</a>
+        </div>
+      </div>
+      <div class="constellation" aria-label="Stellaris connects people, learning, verification, and action">
+        <div class="orbit"></div>
+        <span class="satellite s1">🔎 Find</span>
+        <span class="satellite s2">📚 Learn</span>
+        <span class="satellite s3">🔐 Verify</span>
+        <span class="satellite s4">🧭 Act</span>
+        <div class="planet">🔌</div>
+      </div>
+    </section>
+
+    <section class="section shell" id="pathways">
+      <div class="section-heading">
+        <div><div class="eyebrow">137 options, many starting points</div><h2>One world. Many honest paths.</h2></div>
+        <p>The compendium is not a promise that every path fits every person. It is a structured way to discover what exists, what it requires, who can authorize it, and what a responsible first experiment looks like.</p>
+      </div>
+      <div class="path-grid">
+        <article class="card"><span class="card-icon">🛠️</span><h3>Trades & making</h3><p>Electrical, HVAC, electronics, repair, fabrication, manufacturing, and technical apprenticeships.</p></article>
+        <article class="card"><span class="card-icon">🤝</span><h3>Care & service</h3><p>Peer support, hospitality, pet care, community roles, and person-centered services.</p></article>
+        <article class="card"><span class="card-icon">💼</span><h3>Business & work</h3><p>Employment, small enterprise, sales, operations, administration, and fake-to-real practice.</p></article>
+        <article class="card"><span class="card-icon">🎨</span><h3>Creative & digital</h3><p>Writing, design, media, software, AI-assisted work, storytelling, and original production.</p></article>
+        <article class="card"><span class="card-icon">🌱</span><h3>Land & environment</h3><p>Food, agriculture, cleaning, landscaping, sustainability, transport, and outdoor work.</p></article>
+        <article class="card"><span class="card-icon">📚</span><h3>Education & credentials</h3><p>Schools, courses, certifications, licenses, apprenticeships, and prior-learning routes.</p></article>
+        <article class="card"><span class="card-icon">⚖️</span><h3>Professional pathways</h3><p>Lawful, supervised routes where scope, authorization, insurance, or licensure matters.</p></article>
+        <article class="card"><span class="card-icon">🚀</span><h3>Long-horizon ventures</h3><p>Premium, deeply built companies and systems—not merely the quickest way to earn today.</p></article>
+      </div>
+      <div class="connector" aria-label="Stellaris pathway sequence">
+        <div class="step"><b>01 · Discover</b><span>Name the path and the reason it matters.</span></div><div class="wire">→</div>
+        <div class="step"><b>02 · Verify</b><span>Check official rules, training, cost, and authority.</span></div><div class="wire">→</div>
+        <div class="step"><b>03 · Try</b><span>Choose a lawful, proportionate practice step.</span></div><div class="wire">→</div>
+        <div class="step"><b>04 · Build</b><span>Record evidence and connect the next action.</span></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="session">
+      <div class="planner">
+        <div>
+          <div class="eyebrow">25-minute verified pathway session</div>
+          <h2>Choose one star, not the whole sky.</h2>
+          <p>This demonstration preserves your responsibility and judgment. It helps frame the next move; it does not make the decision for you.</p>
+          <div class="controls">
+            <label>Pathway family
+              <select id="family">
+                <option value="trade">Trades & making</option>
+                <option value="care">Care & service</option>
+                <option value="business">Business & work</option>
+                <option value="creative">Creative & digital</option>
+                <option value="education">Education & credentials</option>
+                <option value="venture">Long-horizon venture</option>
+              </select>
+            </label>
+            <label>What do you need first?
+              <select id="need">
+                <option value="understand">Understand what it is</option>
+                <option value="school">Find school or training</option>
+                <option value="rules">Check licenses and rules</option>
+                <option value="practice">Try a safe practice step</option>
+                <option value="work">Find an employer or mentor</option>
+              </select>
+            </label>
+            <label>Your location or ZIP (kept in this browser only)
+              <input id="location" inputmode="numeric" maxlength="10" placeholder="Example: 56001">
+            </label>
+            <button class="button" id="mapPath">🔌 Connect my next step</button>
+          </div>
+        </div>
+        <div class="result" id="result" aria-live="polite">
+          <span class="status">READY · YOU REMAIN THE DECISION-MAKER</span>
+          <h3>Your accountable pathway card</h3>
+          <p>Select a pathway family and first need. Stellaris will produce a short session outline you can verify before acting.</p>
+          <ol>
+            <li>State what you are considering and why.</li>
+            <li>Open at least one official or credible source.</li>
+            <li>Take one proportionate, accountable next step.</li>
+            <li>Record who, what, when, cost, and the next action.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="standards">
+      <div class="section-heading">
+        <div><div class="eyebrow">Truth before momentum</div><h2>Certification is not authorization.</h2></div>
+        <p>A course may teach a skill. A certificate may document learning. A license, employer, regulator, insurer, or professional scope may still determine whether and how someone can offer the work.</p>
+      </div>
+      <div class="guardrails">
+        <article class="card guardrail"><span class="card-icon">🔐</span><h3>Verify authority</h3><p>Identify the official body, employer, school, regulator, or professional whose rules apply.</p></article>
+        <article class="card guardrail"><span class="card-icon">🧪</span><h3>Label the evidence</h3><p>Separate researched facts, simulations, supervised practice, experiments, and proven results.</p></article>
+        <article class="card guardrail"><span class="card-icon">🧾</span><h3>Account honestly</h3><p>Record costs, sources, permissions, limitations, attribution, and what remains unknown.</p></article>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="target">
+        <div>
+          <div class="eyebrow">The bullseye is chosen, not imposed</div>
+          <h2>Fast and inexpensive can be an entry route. Your deeper destination can still be ambitious, premium, and built to last.</h2>
+        </div>
+        <div class="bullseye" aria-label="Long-horizon destination">✦</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">STW-PATH-0001 · Public learning demonstration · No private client data</footer>
+
+  <script>
+    const familyNames = {
+      trade: 'Trades & making', care: 'Care & service', business: 'Business & work',
+      creative: 'Creative & digital', education: 'Education & credentials', venture: 'Long-horizon venture'
+    };
+    const needSteps = {
+      understand: ['Write a one-sentence definition in your own words.', 'Compare it with one official occupational or educational description.', 'Record one question your definition did not answer.'],
+      school: ['Identify the credential or skill the program actually teaches.', 'Check one school or apprenticeship source serving your location.', 'Record admissions, time, price, and the person or office to contact.'],
+      rules: ['Name the exact activity you may want to perform.', 'Find the relevant state, local, professional, or employer authority.', 'Record whether the activity is unregulated, supervised, certified, registered, or licensed.'],
+      practice: ['Choose a low-risk exercise that does not claim professional authorization.', 'Write the boundaries of the experiment before starting.', 'Save the result and one lesson for the next iteration.'],
+      work: ['Name one role, workplace, mentor, union, or professional association.', 'Prepare three questions about entry requirements and day-to-day work.', 'Record the contact attempt and a date for one follow-up.']
+    };
+    document.getElementById('mapPath').addEventListener('click', function () {
+      const family = document.getElementById('family').value;
+      const need = document.getElementById('need').value;
+      const location = document.getElementById('location').value.trim();
+      const where = location ? ' near ' + location.replace(/[<>]/g, '') : ' in your area';
+      document.getElementById('result').innerHTML =
+        '<span class="status">CONNECTED · 25-MINUTE SESSION</span>' +
+        '<h3>' + familyNames[family] + where + '</h3>' +
+        '<p><strong>Your role:</strong> decide whether this path deserves the next 25 minutes. Stellaris structures the check; you judge the evidence.</p>' +
+        '<ol>' + needSteps[need].map(function(step) { return '<li>' + step + '</li>'; }).join('') + '</ol>' +
+        '<p><strong>Record next action:</strong> who or what you will contact, when you will do it, and what answer would change your decision.</p>';
+    });
+  </script>
+</body>
+</html>
