@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Stellaris Pathways guided course builder: learn, plan, practice, create, verify, and find resources.">
+<title>Stellaris Pathways | Your course</title>
+<style>
+:root{color-scheme:dark;--bg:#071320;--panel:#10243a;--ink:#edf7ff;--muted:#afc5d8;--line:#31516c;--accent:#75e4ea;--gold:#fbd286;--ok:#9be6b5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#153854,var(--bg) 55%);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--accent)}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1090px;margin:auto;padding:24px}header{border-bottom:1px solid var(--line);background:#071523d9}header .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px}header a{text-decoration:none;font-weight:700}.eyebrow{font-size:.8rem;letter-spacing:.14em;color:var(--accent);font-weight:800;text-transform:uppercase}h1{font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-.04em;line-height:1.1;margin:.4rem 0}h2{font-size:1.5rem;margin:0 0 .45rem}h3{margin:.3rem 0}.muted{color:var(--muted)}.hero{margin:30px 0}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:22px}.panel{border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:22px;box-shadow:0 12px 30px #0002}.side{align-self:start;position:sticky;top:15px}.lesson-nav{display:grid;gap:5px;margin:20px 0}.lesson-nav button{text-align:left;border:1px solid transparent;border-radius:11px;padding:10px 12px;background:transparent;color:var(--muted)}.lesson-nav button.active{color:var(--ink);border-color:var(--accent);background:#20465a}.lesson-nav button.done:before{content:"✓ ";color:var(--ok)}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.cols{display:grid;grid-template-columns:1fr 1fr;gap:15px}.btn{border:1px solid var(--accent);border-radius:12px;background:var(--accent);color:#061725;font-weight:800;padding:12px 16px}.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}.btn:disabled{opacity:.45;cursor:not-allowed}label{font-weight:750;display:block;margin:15px 0 6px}input,select,textarea{width:100%;border:1px solid #50728e;border-radius:11px;background:#0a1b2b;color:var(--ink);padding:12px}textarea{min-height:112px;resize:vertical}.progress{height:11px;border-radius:20px;background:#082033;overflow:hidden;margin:12px 0}.progress span{display:block;background:linear-gradient(90deg,var(--accent),var(--ok));height:100%;transition:width .2s}.task{margin:22px 0;padding:17px;border:1px solid #516f83;border-radius:14px;background:#0a1c2e}.task strong{color:var(--gold)}.callout{padding:12px 15px;border-left:3px solid var(--gold);background:#1e3141;border-radius:7px;margin-top:20px}.resources{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.resource{padding:15px;border:1px solid var(--line);border-radius:13px;background:#0b2033}.resource p{margin:.4rem 0}.pill{display:inline-block;padding:2px 8px;border:1px solid #4e7993;border-radius:20px;color:var(--muted);font-size:.76rem;margin-bottom:8px}.stat{font-variant-numeric:tabular-nums}.hidden{display:none}.small{font-size:.88rem}footer{padding:30px 0;color:var(--muted);font-size:.86rem}@media(max-width:780px){.layout,.cols,.resources{grid-template-columns:1fr}.side{position:static}.wrap{padding:17px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="index.html">✦ Stellaris Worldwide</a><span class="small muted">Pathway Course Lab • educational prototype</span></div></header>
+<main class="wrap">
+<section class="hero">
+  <div class="eyebrow">One pathway. Your own course.</div>
+  <h1 id="courseTitle">Your pathway course</h1>
+  <p class="muted">Learn → Verify → Try → Build → Reflect → Find resources. Choose an outcome, work through short lessons, and produce evidence of progress. This site is not a school, license, or credential provider.</p>
+</section>
+<div class="layout">
+<aside class="panel side">
+  <div class="eyebrow">Your destination</div>
+  <label for="path">Pathway</label><input id="path" maxlength="100" placeholder="e.g. All types of flooring">
+  <label for="goal">What do you want to build?</label>
+  <select id="goal">
+    <option value="business">Start a business</option>
+    <option value="website">Build a website</option>
+    <option value="job">Prepare for employment</option>
+    <option value="product">Create a product / service</option>
+    <option value="learn">Learn for personal use</option>
+  </select>
+  <p class="muted small">Any of the 137 pathway cards can open this course using its own title and category in the link.</p>
+  <div class="progress" aria-label="Course progress"><span id="progressFill" style="width:0%"></span></div>
+  <div class="small stat" id="progressText" aria-live="polite">0 of 7 checkpoints</div>
+  <nav class="lesson-nav" id="lessonNav" aria-label="Course lessons"></nav>
+  <button class="btn alt" id="reset">Clear this course's saved work</button>
+</aside>
+<section class="panel" aria-live="polite">
+  <div class="eyebrow" id="lessonCount">Lesson 1</div>
+  <h2 id="lessonTitle"></h2>
+  <p class="muted" id="lessonIntro"></p>
+  <div id="lessonDetails"></div>
+  <div class="task">
+    <strong>✎ Your assignment</strong>
+    <p id="assignment"></p>
+    <label for="notes">Your notes / evidence</label>
+    <textarea id="notes" placeholder="Write the action you took, what you learned, a link, or what you still need to verify. Do not enter sensitive information."></textarea>
+    <label class="row"><input id="complete" type="checkbox" style="width:auto"> I completed this checkpoint honestly</label>
+  </div>
+  <div class="row">
+    <button class="btn alt" id="previous">← Previous</button>
+    <button class="btn" id="next">Next lesson →</button>
+  </div>
+  <div class="callout small">Verify licenses, required supervision, health and safety, insurance, product claims and platform terms with the responsible authority before doing paid or regulated work. A completed course checkpoint is not a professional qualification.</div>
+</section>
+</div>
+</main>
+<footer class="wrap">Stellaris Pathways • Local browser progress only. The site does not send course notes or ZIP codes to a server. Official agencies and training providers remain authoritative.</footer>
+<script>
+(function(){
+"use strict";
+var params=new URLSearchParams(location.search);
+var initialPath=(params.get("path")||"All types of flooring").trim().slice(0,100);
+var initialCategory=(params.get("category")||"").trim();
+var goalNames={business:"business",website:"website",job:"employment plan",product:"product or service",learn:"learning portfolio"};
+var titles=["Set your destination","Discover the work","Learn a core skill","Plan the project","Build something real","Test, verify, and reflect","Find your resources"];
+var el=function(id){return document.getElementById(id)};
+var pathEl=el("path"),goalEl=el("goal"),notesEl=el("notes");
+var step=0,path=initialPath||"All types of flooring",goal="business",check=[],notes=[];
+function key(){return "stellaris-course-v1:"+path.toLowerCase()+":"+goal}
+function load(){try{var x=JSON.parse(localStorage.getItem(key())||"{}");check=Array.isArray(x.check)?x.check.slice(0,7):[];notes=Array.isArray(x.notes)?x.notes.slice(0,7):[]}catch(e){check=[];notes=[]}}
+function save(){try{localStorage.setItem(key(),JSON.stringify({check:check,notes:notes}))}catch(e){}}
+function category(){var n=path.toLowerCase();if(initialCategory)return initialCategory.toLowerCase();if(/floor|carpet|tile|clean|wash|mold|roof|siding/.test(n))return "cleaning";if(/food|pizza|cake|nutrition|salsa|juice/.test(n))return "food";if(/app|code|game|web|computer|software|electronic/.test(n))return "digital";if(/legal|law|health|inspection|medical|patent/.test(n))return "regulated";return "general"}
+function scopeHint(){var c=category();if(c==="cleaning")return "Identify the exact material, read manufacturer-approved methods, find a permitted practice setting, and know when specialist or safety guidance is needed.";if(c==="food")return "Distinguish personal practice from commercial food production. Ask the correct health authority about approved spaces, food handling, labeling and licensing.";if(c==="digital")return "Study a small original example. Check copyright, privacy, accessibility, hosting rules and how to test without exposing other people's data.";if(c==="regulated")return "Separate learning about the field from representing clients or providing regulated services. Identify the agency, credential, supervision, or legal boundaries first.";return "Describe what the role actually involves, whose consent is needed, the smallest safe exercise, and what you are not yet qualified to offer."}
+function specificSkill(){var c=category();if(c==="cleaning")return "Choose one material or surface. Read its care instructions and write a safe, step-by-step checklist. Do not mix chemicals or perform hazardous work.";if(c==="food")return "Document a recipe or process and test it privately where permitted. Separate recipe quality from commercial food-safety authorization.";if(c==="digital")return "Create a small original sketch, page, feature, or specification and test it in a sandbox.";return "Find a credible introduction, extract three essential skills, and practice one with a safe, observable result."}
+function outcome(){if(goal==="website")return "A small original website: purpose, audience, homepage outline, service/project page, contact method, clear claims, mobile check and publication plan.";if(goal==="business")return "A one-page business model: audience, problem, offer, scope, expenses, pricing assumptions, legal checks, and the next customer-discovery conversation.";if(goal==="job")return "A job-ready evidence pack: role requirements, gap analysis, sample task, resume bullet, and three suitable training or employer contacts.";if(goal==="product")return "A prototype brief: user problem, design, materials/tools, cost assumptions, safe first test and feedback plan.";return "A learning portfolio: personal objectives, notes from reliable sources, a safe practical exercise, and reflections."}
+function makeLesson(n){var g=goalNames[goal],p=path;switch(n){
+case 0:return {intro:"Decide why "+p+" matters to you and what success would look like.",details:["Choose one specific outcome for your "+g+".","Set one achievable result for a 25-minute session.","Identify what you can attempt without permission, special equipment, or professional authorization."],task:"Write a one-sentence goal: 'Within four weeks I will create [specific, verifiable result] connected to "+p+".'."};
+case 1:return {intro:"Understand the field before buying tools, offering services, or making claims.",details:[scopeHint(),"Study one primary or official source and record its URL.","List the people, materials, conditions, and rules involved."],task:"Make a three-column note: What the work is / What I must verify / What I can safely practice today."};
+case 2:return {intro:"Practice one skill and record evidence rather than just watching tutorials.",details:[specificSkill(),"Prefer credible courses, supplier or manufacturer documentation, libraries and public learning resources.","Make an observation, receive feedback, and revise once."],task:"Complete one 25-minute practice, record what you did, the source you used, and one specific improvement."};
+case 3:return {intro:"Translate the skill into a realistic plan for your "+g+".",details:[outcome(),"Estimate time and out-of-pocket cost. Mark all numbers as assumptions until verified.","List dependencies: permissions, tools, training, people, money, and safety."],task:"Create a one-page plan with the first three milestones, a budget estimate, and one unresolved question."};
+case 4:return {intro:"Produce a tangible artifact. Start small; keep it original.",details:goal==="website"?["Draft a homepage with headline, audience and honest description.","Add a 'What I am learning' or 'Services' page without unsupported qualifications.","Add a contact method only when privacy and safety considerations are resolved; test the mobile layout."]:goal==="business"?["Draft a service description and customer problem statement.","Make a simple cost and price worksheet, clearly separating estimates from actual costs.","Create a mock quote, landing page, or test offer; don't claim a license you lack."]:goal==="job"?["Make a role-specific resume bullet grounded in actual work.","Write a practice interview answer and demonstrate a sample task.","Compare a real job posting against your skill gaps."]:goal==="product"?["Draw or mock up a small prototype.","Write expected inputs, outputs and failure modes.","Plan a safe test and obtain required permissions."]:["Create a small original practice work.","Document sources and permissions.","Explain what you learned in plain language."],task:"Build the first version of the artifact and write its name or location in your notes."};
+case 5:return {intro:"Check your work before promising, publishing, selling, or applying.",details:["Request constructive feedback from an appropriate person or source.","Verify mandatory requirements directly with the responsible provider or agency.","List limitations truthfully and choose continue, revise, pause, or stop."],task:"Record one piece of feedback, one verified requirement, and one revision or stopping decision."};
+default:return {intro:"Finish the course by finding a credible next connection, tailored to your location and goal.",details:["Start with official finders and public-serving organizations.","Use a ZIP code and desired search radius to prepare a local question; confirm matches with the source.","Record one real person, agency, school, mentor, or program to contact."],task:"Identify one relevant provider and record its name, URL, eligibility question and next action."};
+}}
+var resources=[
+{name:"CareerOneStop Training Finder",url:"https://www.careeronestop.org/FindTraining/find-training.aspx",k:["all"],type:"Training",desc:"U.S. Department of Labor directory to look for training near a location."},
+{name:"CareerOneStop Certification Finder",url:"https://www.careeronestop.org/Toolkit/Training/find-certifications.aspx",k:["all"],type:"Credentials",desc:"Research industry certifications; confirm with the issuing organization."},
+{name:"CareerOneStop License Finder",url:"https://www.careeronestop.org/Toolkit/Training/find-licenses.aspx",k:["all"],type:"Licensing",desc:"Check state occupational license starting points."},
+{name:"CareerForce Minnesota Locations",url:"https://careerforce.mn.gov/locations",k:["all"],type:"Local help",desc:"Find employment support and training referrals by location."},
+{name:"South Central College Programs",url:"https://southcentral.edu/",k:["all"],type:"Education",desc:"Minnesota technical and college programs; ask about current admissions and costs."},
+{name:"SBA Local Assistance",url:"https://www.sba.gov/local-assistance",k:["business","product","website"],type:"Mentoring",desc:"Locate SBA-supported SBDCs, SCORE mentors, and other local business help."},
+{name:"Minnesota SBDC",url:"https://mn.gov/deed/business/help/sbdc/",k:["business","product","website"],type:"Business advice",desc:"Business planning, market research and startup guidance."},
+{name:"Minnesota Secretary of State – Start a Business",url:"https://sos.mn.gov/business-liens/start-a-business/",k:["business","product"],type:"Registration",desc:"Business structures, names and state filings. Registration alone does not authorize regulated work."},
+{name:"Minnesota DLI – Starting a Business",url:"https://www.dli.mn.gov/business/codes-and-laws/starting-business-what-know",k:["business","product","job"],type:"Safety and licensing",desc:"Construction and occupational regulation, labor and workplace requirements."},
+{name:"Apprenticeship.gov",url:"https://www.apprenticeship.gov/",k:["job","learn"],type:"Apprenticeships",desc:"Explore registered apprenticeship pathways and apprenticeship information."},
+{name:"Minnesota Department of Health",url:"https://www.health.state.mn.us/",k:["business","product","learn"],type:"Health regulation",desc:"Start with the appropriate agency for food, public health, and safety topics."},
+{name:"GitHub Pages Documentation",url:"https://docs.github.com/en/pages",k:["website"],type:"Website creation",desc:"Learn how to publish a basic website from a GitHub repository."},
+{name:"MDN Web Docs",url:"https://developer.mozilla.org/en-US/docs/Learn_web_development",k:["website"],type:"Website course",desc:"Step-by-step learning for accessible HTML, CSS and JavaScript."},
+{name:"Google Search Central",url:"https://developers.google.com/search/docs/fundamentals/seo-starter-guide",k:["website","business"],type:"Website discovery",desc:"Official overview of discoverability and search fundamentals."}
+];
+function resourcePanel(){var outer=document.createElement("section"),h=document.createElement("h3");h.textContent="Expand your search by ZIP code";outer.appendChild(h);
+var p=document.createElement("p");p.className="muted";p.textContent="This prepares a location-aware inquiry, rather than inventing nearby schools or results. Enter your ZIP on the official finder, and confirm distance and program availability there.";outer.appendChild(p);
+var grid=document.createElement("div");grid.className="cols";
+var l1=document.createElement("label");l1.textContent="U.S. ZIP code";var zip=document.createElement("input");zip.id="zip";zip.inputMode="numeric";zip.maxLength=5;zip.placeholder="56001";zip.value=localStorage.getItem("stellaris-zip")||"";l1.appendChild(zip);
+var l2=document.createElement("label");l2.textContent="Explore within";var radius=document.createElement("select");["10","25","50","100"].forEach(function(v){var o=document.createElement("option");o.value=v;o.textContent=v+" miles";if((localStorage.getItem("stellaris-radius")||"25")===v)o.selected=true;radius.appendChild(o)});l2.appendChild(radius);grid.appendChild(l1);grid.appendChild(l2);outer.appendChild(grid);
+var actions=document.createElement("div");actions.className="row";actions.style.marginTop="14px";var copy=document.createElement("button");copy.type="button";copy.className="btn alt";copy.textContent="Copy question for resource provider";var msg=document.createElement("span");msg.className="small muted";actions.appendChild(copy);actions.appendChild(msg);outer.appendChild(actions);
+var list=document.createElement("div");list.className="resources";
+resources.filter(function(r){return r.k.includes("all")||r.k.includes(goal)}).forEach(function(r){var card=document.createElement("div");card.className="resource";var tag=document.createElement("span");tag.className="pill";tag.textContent=r.type;var title=document.createElement("a");title.href=r.url;title.target="_blank";title.rel="noopener noreferrer";title.textContent=r.name+" ↗";var description=document.createElement("p");description.className="small muted";description.textContent=r.desc;card.appendChild(tag);card.appendChild(document.createElement("br"));card.appendChild(title);card.appendChild(description);list.appendChild(card)});outer.appendChild(list);
+function persist(){if(/^\d{5}$/.test(zip.value))localStorage.setItem("stellaris-zip",zip.value);localStorage.setItem("stellaris-radius",radius.value)}
+zip.addEventListener("input",persist);radius.addEventListener("change",persist);copy.addEventListener("click",function(){if(!/^\d{5}$/.test(zip.value)){msg.textContent="Enter a 5-digit ZIP first.";return}persist();var text="I am studying "+path+" and planning a "+goalNames[goal]+". Please tell me which entry-level courses, local programs, permissions or licensing authorities are relevant within about "+radius.value+" miles of ZIP "+zip.value+", what they cost, and which requirements are current. What is one safe first step?";if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){msg.textContent="Question copied."}).catch(function(){msg.textContent=text})}else{msg.textContent=text}});
+return outer}
+function render(){var l=makeLesson(step);el("courseTitle").textContent=path+": your course";el("lessonCount").textContent="STEP "+(step+1)+" OF 7 • "+(goalNames[goal]||goal);el("lessonTitle").textContent=titles[step];el("lessonIntro").textContent=l.intro;el("assignment").textContent=l.task;var details=el("lessonDetails");details.replaceChildren();var ul=document.createElement("ul");l.details.forEach(function(t){var li=document.createElement("li");li.textContent=t;ul.appendChild(li)});details.appendChild(ul);if(step===6)details.appendChild(resourcePanel());notesEl.value=notes[step]||"";el("complete").checked=!!check[step];var nav=el("lessonNav");nav.replaceChildren();titles.forEach(function(t,i){var b=document.createElement("button");b.type="button";b.textContent=(i+1)+". "+t;b.className=(i===step?"active ":"")+(check[i]?"done":"");b.setAttribute("aria-current",i===step?"step":"false");b.addEventListener("click",function(){saveNote();step=i;render()});nav.appendChild(b)});var done=check.filter(Boolean).length;el("progressText").textContent=done+" of 7 checkpoints";el("progressFill").style.width=(done/7*100)+"%";el("previous").disabled=step===0;el("next").textContent=step===6?"Back to beginning ↺":"Next lesson →"}
+function saveNote(){notes[step]=notesEl.value;save()}
+el("previous").addEventListener("click",function(){saveNote();if(step>0)step--;render()});el("next").addEventListener("click",function(){saveNote();step=(step+1)%7;render()});notesEl.addEventListener("input",saveNote);el("complete").addEventListener("change",function(){check[step]=this.checked;saveNote();render()});
+pathEl.addEventListener("change",function(){saveNote();path=this.value.trim().slice(0,100)||"My pathway";initialCategory="";pathEl.value=path;step=0;load();render()});goalEl.addEventListener("change",function(){saveNote();goal=this.value;step=0;load();render()});el("reset").addEventListener("click",function(){if(confirm("Clear saved checkpoints and notes for this pathway and destination?")){localStorage.removeItem(key());check=[];notes=[];step=0;render()}});
+pathEl.value=path;goalEl.value=goal;load();render();
+})();
+</script>
+</body>
+</html>
