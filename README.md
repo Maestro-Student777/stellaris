@@ -7,7 +7,7 @@ Stellaris Worldwide is a public-facing pathway platform designed to connect peop
 - **GitHub:** public page code, documentation, issue tracking, and version history
 - **HubSpot:** landing page, contacts, operational follow-up, tasks, and project relationships
 - **Stellaris pathway engine:** discovery, verification, safe practice, and accountable next actions
-- **Endless AI:** a related but distinct product-realization concept; it is not replaced by this repository
+- **Endless SI:** a related but distinct product-realization concept; it is not replaced by this repository
 
 ## Core connector
 
